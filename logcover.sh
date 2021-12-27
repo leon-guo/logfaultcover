@@ -212,7 +212,7 @@ function generate_file_html()
 
 function generate_file_list()
 {
-	#Next Step: add git support
+	#Next Step: plan to add git support
 	svn_url=$1
     svn co $svn_url
     #fpath=`echo $svn_url | awk -F"/" '{print $NF}'`
