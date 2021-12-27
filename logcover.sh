@@ -1,15 +1,14 @@
-#!/bin/sh 
+#0表示统计本地
+#1表示统计远端机器
+logcover_type=0
+timeout=300
 
-source renderHtml.sh
-source diff_one_line.sh
-source logcover.cfg
-
-src_result="$tmp_dir/src_result.txt"
-log_result="$tmp_dir/filter.log"
-wf_log_result="$tmp_dir/wf_filter.log"
-file_list="$tmp_dir/_file_list"
-log_temp_dir="$tmp_dir/_log/"
-remote_tmp_result_log="$tmp_dir/_remote_tmp_log"
+#下面的配置只有在logcover_type=1时有效
+log_pathes="YYYYY XXXXX"
+script_path="/home/work/script"
+machines="mac_000 mac_111"
+user="work"
+passwd="password"remote_tmp_result_log="$tmp_dir/_remote_tmp_log"
 log_type="WARNING|FATAL|warning|fatal|log.error|log.critical|CRITICAL|ERROR|WARN|LOG.warn"
 file_type=".*\\.\\(c\\|h\\|pl\\|cpp\\|php\\|py\\|java\\|cc\\)"
 log_file_type="wf|"
@@ -213,6 +212,7 @@ function generate_file_html()
 
 function generate_file_list()
 {
+	#Next Step: add git support
 	svn_url=$1
     svn co $svn_url
     #fpath=`echo $svn_url | awk -F"/" '{print $NF}'`
