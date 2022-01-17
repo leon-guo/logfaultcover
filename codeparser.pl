@@ -26,7 +26,7 @@ sub parse_file()
 {
     my ($single_file)=@_;
 
-    #Èç¹ûpyµÄ»°²»ÒÔ;½áÎ²£¬Òò´ËĞèÒª×öÊÊÅä
+    #å¦‚æœpyçš„è¯ä¸ä»¥;ç»“å°¾ï¼Œå› æ­¤éœ€è¦åšé€‚é…
     my $tail;
     if($single_file =~ /.*\.py/){
     	$tail="";
@@ -54,33 +54,33 @@ sub parse_file()
             	next;
             }
 
-            #Õâ²¿·ÖÆ¥ÅäÒÔ""×÷ÎªÈÕÖ¾µÄ¸ñÊ½
-            #Æ¥ÅäÕûĞĞ£¬ÒÔ);½áÎ²
+            #è¿™éƒ¨åˆ†åŒ¹é…ä»¥""ä½œä¸ºæ—¥å¿—çš„æ ¼å¼
+            #åŒ¹é…æ•´è¡Œï¼Œä»¥);ç»“å°¾
             if (/${log_prefix}($type)\s*(,\s*|\().*\s*"(.*)".*\)$tail\s*(\s*|\\\s*)$/)#log_prefix log_type space(, or ()space"chars"chars);spaces$
             {
                 print $baseName,"%%",$lineNo,"%%",$1,"%%",$3,"\n";
                 next;
             }elsif(/${log_prefix}($type)\s*(,\s*|\()(\s*|.*)\s*"(.*?)(".*|"\s*,.*|"\),.*|"\s*,\s*\\|\\)\s*$/){
-            #Æ¥Åä²¿·ÖĞĞ£¬±ê¼Çlog_count£¬ÊÕ¼¯ÈÕÖ¾
+            #åŒ¹é…éƒ¨åˆ†è¡Œï¼Œæ ‡è®°log_countï¼Œæ”¶é›†æ—¥å¿—
                 $log_buf=$4;
                 $log_count=1;
                 $log_type=$1;
                 next;
             }elsif(/${log_prefix}($type)\s*(,\s*|\()(\s*|\s*\\)\s*$/){
-            	#µÚÒ»´ÎÆ¥Åäµ½£¬³õÊ¼»¯±äÁ¿£¬ÓÃÓÚÏÂÒ»´ÎÆ´½ÓÈÕÖ¾
+            	#ç¬¬ä¸€æ¬¡åŒ¹é…åˆ°ï¼Œåˆå§‹åŒ–å˜é‡ï¼Œç”¨äºä¸‹ä¸€æ¬¡æ‹¼æ¥æ—¥å¿—
                 $log_buf="";
                 $log_count=1;
                 $log_type=$1;
                 next;
             }elsif($log_count gt 0){
-            	#Æ´½ÓÈÕÖ¾
+            	#æ‹¼æ¥æ—¥å¿—
                 if(/("|\\)(.*)"/){
                     $log_buf = "$log_buf"."$2";
                     $log_count+=1;
                 }else{
                     $log_count+=1;
                 }
-                #ÕÒµ½ÈÕÖ¾½áÎ²£¬´òÓ¡¾ßÌåÈÕÖ¾ĞÅÏ¢
+                #æ‰¾åˆ°æ—¥å¿—ç»“å°¾ï¼Œæ‰“å°å…·ä½“æ—¥å¿—ä¿¡æ¯
                 if(/\)\s*$tail\s*(\\\s*|\s*)$/){
 #print "can print now $lineNo\n";
                     print $baseName,"%%",$lineNo,"%%",$log_type,"%%",$log_buf,"\n";
@@ -91,12 +91,12 @@ sub parse_file()
                 next;
             }
 
-            #Õâ²¿·ÖÆ¥ÅäÒÔ''×÷ÎªÈÕÖ¾µÄ¸ñÊ½£¬ÓëÉÏÃæÀàËÆ
+            #è¿™éƒ¨åˆ†åŒ¹é…ä»¥''ä½œä¸ºæ—¥å¿—çš„æ ¼å¼ï¼Œä¸ä¸Šé¢ç±»ä¼¼
             if (/${log_prefix}($type)\s*(,\s*|\().*\s*'(.*)'.*\)$tail\s*(\s*|\\\s*)$/)#log_prefix log_type space(, or ()space"chars"chars);spaces$
             {
                 print $baseName,"%%",$lineNo,"%%",$1,"%%",$3,"\n";
             }elsif(/${log_prefix}($type)\s*(,\s*|\()(\s*|.*)\s*'(.*?)('.*|'\s*,.*|'\),.*|'\s*,\s*\\|\\)\s*$/){
-            #Æ¥Åä²¿·ÖĞĞ£¬±ê¼Çlog_count£¬ÊÕ¼¯ÈÕÖ¾
+            #åŒ¹é…éƒ¨åˆ†è¡Œï¼Œæ ‡è®°log_countï¼Œæ”¶é›†æ—¥å¿—
                 $log_buf=$4;
                 $log_count=1;
                 $log_type=$1;
